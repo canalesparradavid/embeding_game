@@ -141,8 +141,6 @@ class Partida:
             
             random.shuffle(jugadores_ronda)
             apuesta_maxima = self.calcula_apuesta(jugadores_ronda[0])
-            
-            print('apuesta maxima: ',apuesta_maxima)
 
             # Calculo la accion de cada jugador
             jugadores_a_retirar = []
@@ -154,8 +152,6 @@ class Partida:
             # Retiro a los jugadores que no han seguido apostando
             for jugador in jugadores_a_retirar:
                 jugadores_ronda.remove(jugador)
-                
-            print('jugadores restantes: ', len(jugadores_ronda))
                 
             # Quito las fichas apostadas a los jugadores restantes y actualizo la apuesta total
             fichas_apostadas = fichas_apostadas + apuesta_maxima * len(jugadores_ronda)
