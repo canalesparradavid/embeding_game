@@ -112,7 +112,7 @@ class Partida:
         self.decision = ''
         esta_jugando = True
         fichas_apostadas = 0
-        cartas_mesa = None
+        self.cartas_mesa = None
         jugadores_ronda = []
         
         # Fase 1 - Se reparten 2 cartas a cada jugador
@@ -134,10 +134,10 @@ class Partida:
         # Fase 3 - Fase de apuestas
         cartas_a_ensenar = [3,1,1]     # El numero de cartas que se enseñaran en cada ronda de apuestas
         for n_cartas in cartas_a_ensenar:
-            if(cartas_mesa is None):
-                cartas_mesa = self.escoger_cartas(n_cartas)
+            if(self.cartas_mesa is None):
+                self.cartas_mesa = self.escoger_cartas(n_cartas)
             else:
-                cartas_mesa = np.vstack((cartas_mesa, self.escoger_cartas(n_cartas)))
+                self.cartas_mesa = np.vstack((self.cartas_mesa, self.escoger_cartas(n_cartas)))
             
             random.shuffle(jugadores_ronda)
             apuesta_maxima = self.calcula_apuesta(jugadores_ronda[0])
@@ -174,10 +174,10 @@ class Partida:
         # Fin de ronda - Se calcula al ganador
         puntuaciones = []
         for jugador in jugadores_ronda:
-            puntuaciones.append(self.calcular_puntuacion(jugador.cartas, cartas_mesa))
+            puntuaciones.append(self.calcular_puntuacion(jugador.cartas, self.cartas_mesa))
         maxima_puntuacion = max(puntuaciones)
         
-        if(esta_jugando and self.calcular_puntuacion(self.jugador.cartas, cartas_mesa) > maxima_puntuacion):
+        if(esta_jugando and self.calcular_puntuacion(self.jugador.cartas, self.cartas_mesa) > maxima_puntuacion):
             self.jugador.fichas = self.jugador.fichas + fichas_apostadas
             return
         
@@ -186,15 +186,15 @@ class Partida:
             ganador = 0
         else:                        # Si hay empate se desempata
             max_pos = 0
-            min_punt = self.puntuacion_desempate(jugadores_ronda[0].cartas, cartas_mesa)
+            min_punt = self.puntuacion_desempate(jugadores_ronda[0].cartas, self.cartas_mesa)
             for i in range(1, len(ganadores)):
-                punt = self.puntuacion_desempate(jugadores_ronda[0].cartas, cartas_mesa)
+                punt = self.puntuacion_desempate(jugadores_ronda[0].cartas, self.cartas_mesa)
                 if punt < min_punt:
                     min_punt = punt
                     max_pos = i
             ganador = max_pos
             
-            if esta_jugando and self.puntuacion_desempate(self.jugador.cartas, cartas_mesa) < min_punt:
+            if esta_jugando and self.puntuacion_desempate(self.jugador.cartas, self.cartas_mesa) < min_punt:
                 self.jugador.fichas = self.jugador.fichas + fichas_apostadas
                 return
 
