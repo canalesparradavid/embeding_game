@@ -7,7 +7,7 @@ class Partida:
     distancia_maxima_relacionados = 15     # Calculado a base de prueba-error
     fichas_por_jugador = 50
     
-    def __init__(self, n_jugadores, baraja):
+    def __init__(self, n_jugadores, baraja, nombre_jugador, nombres_jugadores):
         # Creo una variable para almacenar el input de un jugador
         self.decision = ''
         
@@ -15,10 +15,10 @@ class Partida:
         self.baraja = np.array(baraja)
         
         # Creo una lista de jugadores
-        self.jugadores = [Jugador(fichas = self.fichas_por_jugador) for i in range(n_jugadores)]
+        self.jugadores = [Jugador(nombre = nombres_jugadores[i],fichas = self.fichas_por_jugador) for i in range(n_jugadores)]
         
         # Creo al jugadorampliasen
-        self.jugador = Jugador(fichas = self.fichas_por_jugador)
+        self.jugador = Jugador(nombre = nombre_jugador, fichas = self.fichas_por_jugador)
         
     '''
     Calcula la puntuacion a tener en cuenta en caso de un empate
